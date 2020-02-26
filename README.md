@@ -78,6 +78,25 @@ INNER JOIN (
 on c.facts_id = f.id
 ORDER by 3 desc
 ```
+
+more complicated inner join
+
+```sql
+SELECT 
+f.name country,
+c.urban_pop,
+f.population total_pop,
+c.urban_pop/CAST(f.population AS FLOAT) urban_pct
+FROM facts f
+INNER JOIN (
+ SELECT facts_id, SUM(population) urban_pop
+ FROM cities 
+ GROUP BY 1
+) c ON c.facts_id = f.id
+where urban_pct > 0.5
+order by 4 ASC
+```
+
 ## Sub queries
 
 ex1:
