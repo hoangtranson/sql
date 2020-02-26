@@ -2,6 +2,19 @@
 
 This is list of sample query for SQL that help to memorize the SQL
 
+## Generate Table info
+
+```sql
+PRAGMA TABLE_INFO(recent_grads);
+```
+
+## casting value
+
+```sql
+SELECT CAST(Women as Float) / CAST(Total as Float) 
+FROM recent_grads;
+```
+
 ## left join
 
 ```sql
@@ -115,4 +128,30 @@ WHERE column_X IN
   SELECT column_X
   FROM table_B
 );
+```
+
+## aggregation
+
+ex1: 
+
+```sql
+SELECT SUM(Employed)
+FROM recent_grads
+GROUP BY Major_category;
+```
+
+ex2:
+
+```sql
+SELECT Major_category, AVG(Employed) / AVG(Total) AS share_employed 
+FROM recent_grads 
+GROUP BY Major_category 
+HAVING share_employed > 0.8;
+```
+
+ex3:
+
+```sql
+SELECT Major_category, ROUND(ShareWomen, 2) AS rounded_share_women 
+FROM recent_grads;
 ```
