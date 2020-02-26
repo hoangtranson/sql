@@ -97,6 +97,26 @@ where urban_pct > 0.5
 order by 4 ASC
 ```
 
+```sql
+SELECT
+    ta.album,
+    ta.artist_name artist,
+    COUNT(*) tracks_purchased
+FROM invoice_line il
+INNER JOIN (
+            SELECT
+                t.track_id,
+                ar.name artist_name,
+                al.title album
+            FROM track t
+            INNER JOIN album al ON al.album_id = t.album_id
+            INNER JOIN artist ar ON ar.artist_id = al.artist_id
+           ) ta
+           ON ta.track_id = il.track_id
+GROUP BY 2
+ORDER BY 3 DESC LIMIT 5;
+```
+
 ## Sub queries
 
 ex1:
