@@ -1,7 +1,8 @@
-# sql
-sample query on sql
+# Sample Query on SQL
 
-1. left join
+This is list of sample query for SQL that help to memorize the SQL
+
+## left join
 
 ```sql
 SELECT f.name country, c.name city
@@ -10,7 +11,7 @@ LEFT JOIN cities c ON c.facts_id = f.id
 LIMIT 5;
 ```
 
-2. right join
+## right join
 
 ```sql
 SELECT f.name country, c.name city
@@ -19,7 +20,7 @@ RIGHT JOIN facts f ON f.id = c.facts_id
 LIMIT 5;
 ```
 
-3. full outer join
+## full outer join
 
 ```sql
 SELECT f.name country, c.name city
@@ -28,7 +29,7 @@ FULL OUTER JOIN facts f ON f.id = c.facts_id
 LIMIT 5;
 ```
 
-4. inner join
+## inner join
 
 ex1:
 
@@ -64,4 +65,50 @@ INNER JOIN (
 on c.facts_id = f.id
 ORDER by 3 desc
 ```
+## Sub queries
 
+ex1:
+
+```sql
+SELECT Major, ShareWomen 
+FROM recent_grads
+WHERE ShareWomen > ( SELECT AVG(ShareWomen) FROM recent_grads )                                                           
+```
+
+ex2:
+
+```sql
+SELECT *
+FROM customers c
+WHERE 100 <
+(
+  SELECT COUNT ( * )
+  FROM orders
+  WHERE customer_id = c.customer_id
+);
+```
+
+## In keywork
+
+Return row that matchs list of value
+
+ex1:
+
+```sql
+SELECT Major, Major_category 
+FROM recent_grads
+WHERE Major_category 
+IN ('Business', 'Engineering')
+```
+
+ex2:
+
+```sql
+SELECT *
+FROM table_A
+WHERE column_X IN
+(
+  SELECT column_X
+  FROM table_B
+);
+```
