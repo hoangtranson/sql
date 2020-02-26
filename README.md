@@ -72,7 +72,11 @@ ex1:
 ```sql
 SELECT Major, ShareWomen 
 FROM recent_grads
-WHERE ShareWomen > ( SELECT AVG(ShareWomen) FROM recent_grads )                                                           
+WHERE ShareWomen > 
+( 
+  SELECT AVG(ShareWomen) 
+  FROM recent_grads 
+)                                                           
 ```
 
 ex2:
