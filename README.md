@@ -217,3 +217,54 @@ ex3:
 SELECT Major_category, ROUND(ShareWomen, 2) AS rounded_share_women 
 FROM recent_grads;
 ```
+
+## When keyword
+
+syntax:
+
+```sql
+CASE
+    WHEN [comparison_1] THEN [value_1]
+    WHEN [comparison_2] THEN [value_2]
+    ELSE [value_3]
+    END
+    AS [new_column_name]
+```
+
+ex1: 
+
+```sql
+SELECT
+    media_type_id,
+    name,
+    CASE
+        WHEN name LIKE '%Protected%' THEN 1
+        ELSE 0
+        END
+        AS protected
+FROM media_type;
+```
+ex2: use with inner join
+
+```sql
+SELECT
+    c.first_name || " " || c.last_name customer_name,
+    i.number_of_purchases,
+    i.total_spent,
+    CASE
+        WHEN i.total_spent < 40 THEN 'small spender'
+        WHEN i.total_spent > 100 THEN 'big spender'
+        ELSE 'regular'
+        END
+        AS customer_category
+FROM customer c
+INNER JOIN (
+ SELECT 
+    customer_id, 
+    count(*) number_of_purchases,
+    SUM(total) total_spent
+ FROM invoice 
+ GROUP BY 1
+) i ON i.customer_id = c.customer_id
+ORDER by customer_name asc
+```
