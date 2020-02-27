@@ -117,6 +117,17 @@ GROUP BY 2
 ORDER BY 3 DESC LIMIT 5;
 ```
 
+inner join same table
+
+```sql
+SELECT
+    e1.employee_id,
+    e2.employee_id supervisor_id
+FROM employee e1
+INNER JOIN employee e2 on e1.reports_to = e2.employee_id
+LIMIT 4;
+```
+
 ## Sub queries
 
 ex1:
