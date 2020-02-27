@@ -23,6 +23,18 @@ FROM facts f
 LEFT JOIN cities c ON c.facts_id = f.id
 LIMIT 5;
 ```
+combine columns
+
+```sql
+SELECT
+    e1.first_name || " " || e1.last_name employee_name,
+    e1.title employee_title,
+    e2.first_name || " " || e2.last_name supervisor_name,
+    e2.title supervisor_title
+FROM employee e1
+LEFT JOIN employee e2 on e1.reports_to = e2.employee_id
+ORDER by employee_name asc
+```
 
 ## right join
 
