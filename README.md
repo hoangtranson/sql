@@ -268,3 +268,81 @@ INNER JOIN (
 ) i ON i.customer_id = c.customer_id
 ORDER by customer_name asc
 ```
+
+## With keyword
+
+Syntax:
+
+```sql
+WITH [alias_name] AS ([subquery])
+
+SELECT [main_query]
+```
+ex1:
+
+```sql
+SELECT * FROM
+    (
+     SELECT
+         t.name,
+         ar.name artist,
+         al.title album_name,
+         mt.name media_type,
+         g.name genre,
+         t.milliseconds length_milliseconds
+     FROM track t
+     INNER JOIN media_type mt ON mt.media_type_id = t.media_type_id
+     INNER JOIN genre g ON g.genre_id = t.genre_id
+     INNER JOIN album al ON al.album_id = t.album_id
+     INNER JOIN artist ar ON ar.artist_id = al.artist_id
+    )
+WHERE album_name = "Jagged Little Pill";
+```
+
+can change to:
+
+```sql
+WITH track_info as
+    (
+     SELECT
+         t.name,
+         ar.name artist,
+         al.title album_name,
+         mt.name media_type,
+         g.name genre,
+         t.milliseconds length_milliseconds
+     FROM track t
+     INNER JOIN media_type mt ON mt.media_type_id = t.media_type_id
+     INNER JOIN genre g ON g.genre_id = t.genre_id
+     INNER JOIN album al ON al.album_id = t.album_id
+     INNER JOIN artist ar ON ar.artist_id = al.artist_id
+    )
+
+SELECT * from track_info
+WHERE album_name = "Jagged Little Pill";
+```
+
+ex2: 
+
+```sql
+WITH playlist_info as
+    (
+        SELECT
+            p.playlist_id,
+            p.name playlist_name,
+            t.name track_name,
+            (t.milliseconds/1000) length_seconds
+        FROM playlist p
+        LEFT JOIN playlist_track pt ON pt.playlist_id = p.playlist_id
+        LEFT JOIN track t ON t.track_id = pt.track_id
+    )
+
+SELECT
+    playlist_id,
+    playlist_name,
+    COUNT(track_name) number_of_tracks,
+    SUM(length_seconds) length_seconds
+FROM playlist_info
+GROUP BY 1
+ORDER by 1
+```
