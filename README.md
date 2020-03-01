@@ -346,3 +346,17 @@ FROM playlist_info
 GROUP BY 1
 ORDER by 1
 ```
+
+## create view
+
+```sql
+CREATE VIEW chinook.customer_gt_90_dollars AS 
+     SELECT c.* 
+     FROM chinook.invoice i
+     INNER JOIN chinook.customer c
+     ON i.customer_id = c.customer_id
+     GROUP BY 1
+     HAVING SUM(i.total) > 90;
+     
+SELECT * FROM chinook.customer_gt_90_dollars;
+```
