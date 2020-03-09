@@ -347,6 +347,30 @@ GROUP BY 1
 ORDER by 1
 ```
 
+multiple with WITH
+
+```sql
+WITH
+    c_india AS
+        (
+        SELECT * FROM customer
+        WHERE country = "India"
+        ),
+    c_sum_total AS
+        (
+         SELECT customer_id, SUM(total) total_purchases FROM invoice
+         GROUP BY 1
+        )
+        
+SELECT
+    ci.first_name || " " || ci.last_name customer_name,
+    cst.total_purchases
+FROM c_india ci
+INNER JOIN c_sum_total cst 
+ON ci.customer_id = cst.customer_id
+ORDER BY 1;
+```
+
 ## create view
 
 ```sql
